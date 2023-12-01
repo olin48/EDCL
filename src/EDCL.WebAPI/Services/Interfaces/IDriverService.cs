@@ -5,6 +5,6 @@ namespace EDCL.WebAPI.Services.Interfaces
 {
     public interface IDriverService
     {
-        Task<BaseResponse<IEnumerable<DriverInfoDto>>> GetDriverInfoByNoHP(string nohp);
+        Task<BaseResponse<DriverInfoDto>> GetDriverInfoByNoHP(string nohp);
     }
 }

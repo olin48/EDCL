@@ -8,7 +8,7 @@ namespace EDCL.WebAPI.Utils.Response
     {
         public int Status { get; set; }
         public string Message { get; set; }
-        
+
         public T? Data { get; set; }
     }
 
@@ -19,15 +19,25 @@ namespace EDCL.WebAPI.Utils.Response
 
     public class Response
     {
-        public static BaseResponse<IEnumerable<T>> CreateResponse<T>(int status, string message, IEnumerable<T> data)
+        public static BaseResponse<T> CreateResponse<T>(int status, string message, T data)
         {
-            return new BaseResponse<IEnumerable<T>>
+            return new BaseResponse<T>
             {
                 Status = status,
                 Message = message,
-               Data = data
+                Data = data
             };
         }
+        // public static BaseResponse<IEnumerable<T>> CreateResponse<T>(int status, string message, IEnumerable<T> data)
+        // {
+        //     return new BaseResponse<IEnumerable<T>>
+        //     {
+        //         Status = status,
+        //         Message = message,
+        //         Data = data
+        //     };
+        // }
+
 
         /*
         public static BaseResponse<IEnumerable<T>> CreateResponse<T>(int status, string message)

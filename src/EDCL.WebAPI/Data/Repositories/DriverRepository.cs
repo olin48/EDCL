@@ -15,7 +15,7 @@ namespace EDCL.WebAPI.Data.Repositories
         {
             _dbConnection = new SqlConnection(connectionString);
         }
-        public async Task<IEnumerable<DriverInfoDto>> FindDriverInfoByNoHP(string nohp)
+        public async Task<DriverInfoDto> FindDriverInfoByNoHP(string nohp)
         {
 
             string spName = "SP_EDCL1_GetDriverInfo";
@@ -26,7 +26,7 @@ namespace EDCL.WebAPI.Data.Repositories
                 no_hp = nohp
             };
 
-            return await _dbConnection.QueryAsync<DriverInfoDto>(spName, parameters, commandType: CommandType.StoredProcedure);
+            return await _dbConnection.QueryFirstOrDefaultAsync<DriverInfoDto>(spName, parameters, commandType: CommandType.StoredProcedure);
         }
     }
 }

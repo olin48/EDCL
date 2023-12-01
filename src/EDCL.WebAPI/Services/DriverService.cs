@@ -26,25 +26,51 @@ namespace EDCL.WebAPI.Services
             _logger = logger;
         }
 
-        public async Task <BaseResponse<IEnumerable<DriverInfoDto>>> GetDriverInfoByNoHP(string nohp)
+        public async Task<BaseResponse<DriverInfoDto>> GetDriverInfoByNoHP(string nohp)
         {
             try
             {
                 var data = await _driverRepository.FindDriverInfoByNoHP(nohp);
 
-                BaseResponse<IEnumerable<DriverInfoDto>> response;
+                BaseResponse<DriverInfoDto> response;
+
+                // var errorResponse = new
+                // {
+                //     status = "error",
+                //     data = (object)null,
+                //     message = "Person not found."
+                // };
+
+                // return Response.CreateResponse(errorResponse);
 
                 if (data == null)
                 {
-                    response = Response.CreateResponse((int)HttpStatusCode.BadRequest, $"Data {nohp} ditemukan", data);
-                } else {
-                    
-                    if (data.Count() == 0) {
-                        response = Response.CreateResponse((int)HttpStatusCode.NotFound, $"Data {nohp} ditemukan", data);
-                    } else {
-                        response = Response.CreateResponse((int)HttpStatusCode.OK, $"Data {nohp} ditemukan", data);
-                    }
+                    response = Response.CreateResponse((int)HttpStatusCode.NotFound, $"Data {nohp} tidak ditemukan", data);
                 }
+                else
+                {
+                    response = Response.CreateResponse((int)HttpStatusCode.OK, $"Data {nohp} ditemukan", data);
+
+                }
+
+
+
+                // if (data == null)
+                // {
+                //     response = Response.CreateResponse((int)HttpStatusCode.BadRequest, $"Data {nohp} ditemukan", data);
+                // }
+                // else
+                // {
+
+                //     if (data.Count() == 0)
+                //     {
+                //         response = Response.CreateResponse((int)HttpStatusCode.NotFound, $"Data {nohp} ditemukan", data);
+                //     }
+                //     else
+                //     {
+                //         response = Response.CreateResponse((int)HttpStatusCode.OK, $"Data {nohp} ditemukan", data);
+                //     }
+                // }
 
 
 
