@@ -2,12 +2,16 @@
 using EDCL.WebAPI.Data.Repositories;
 using EDCL.WebAPI.Data.Repositories.Interfaces;
 using EDCL.WebAPI.Service;
+using EDCL.WebAPI.Utils.Response;
 using EDCL.WebAPI.Services.Interfaces;
 using System.Xml;
 using System;
-using EDCL.WebAPI.Utils.Response;
 using Newtonsoft.Json;
 using System.Net;
+using System.Collections.Generic;
+using System.Linq;
+
+
 
 namespace EDCL.WebAPI.Services
 {
@@ -22,25 +26,34 @@ namespace EDCL.WebAPI.Services
             _logger = logger;
         }
 
-        public async Task<BaseResponse<IEnumerable<DriverInfoDto>>> GetDriverInfoByNoHP(string nohp)
+        public async Task <BaseResponse<IEnumerable<DriverInfoDto>>> GetDriverInfoByNoHP(string nohp)
         {
             try
             {
                 var data = await _driverRepository.FindDriverInfoByNoHP(nohp);
 
-                var driverInfo = new BaseResponse<IEnumerable<DriverInfoDto>>
+                BaseResponse<IEnumerable<DriverInfoDto>> response;
+
+                if (data == null)
                 {
-                    Status = (int)HttpStatusCode.OK,
-                    Message = "Data retrieval successful",
-                    Data = data
-                };
+                    response = Response.CreateResponse((int)HttpStatusCode.BadRequest, $"Data {nohp} ditemukan", data);
+                } else {
+                    
+                    if (data.Count() == 0) {
+                        response = Response.CreateResponse((int)HttpStatusCode.NotFound, $"Data {nohp} ditemukan", data);
+                    } else {
+                        response = Response.CreateResponse((int)HttpStatusCode.OK, $"Data {nohp} ditemukan", data);
+                    }
+                }
+
+
 
                 // Mengkonversi hasil ke format JSON menggunakan JSON.NET
                 //string jsonResult = JsonConvert.SerializeObject(response, Newtonsoft.Json.Formatting.Indented);
 
 
                 //return await _driverRepository.FindDriverInfoByNoHP(nohp);
-                return driverInfo;
+                return response; // Response.CreateResponse((int)HttpStatusCode.OK, $"Data {nohp} ditemukan", data);
             }
             catch (Exception ex)
             {

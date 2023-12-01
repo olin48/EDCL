@@ -1,8 +1,10 @@
 ﻿using EDCL.WebAPI.Service;
 using EDCL.WebAPI.Service.Interfaces;
 using EDCL.WebAPI.Services.Interfaces;
+using EDCL.WebAPI.Utils.Response;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace EDCL.WebAPI.Controllers
 {
@@ -24,15 +26,20 @@ namespace EDCL.WebAPI.Controllers
         {
             try
             {
-                var driver = await _driverService.GetDriverInfoByNoHP(nohp);
+                var data = await _driverService.GetDriverInfoByNoHP(nohp);
+                //int statusCode = data.Status;
 
-                if (driver == null)
+                //var response = Response. .CreateResponse((int)HttpStatusCode.OK, $"Data {nohp} ditemukan", data);
+                /*
+                if (data == null)
                 {
                     _logger.LogWarning($"Driver with nohp {nohp} not found.");
                     return NotFound();
                 }
+                */
+                return StatusCode(data.Status, data);
 
-                return Ok(driver);
+                //return Ok(data);
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using EDCL.WebAPI.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace EDCL.WebAPI.Controllers
 {
@@ -23,6 +24,9 @@ namespace EDCL.WebAPI.Controllers
             try
             {
                 var products = await _productService.GetProducts();
+
+                
+
                 _logger.LogInformation("Retrieved products successfully.");
                 return Ok(products);
             }

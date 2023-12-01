@@ -45,6 +45,17 @@ namespace EDCL.WebAPI
                 builder.AddDebug();
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
+
 
 
         }
@@ -58,6 +69,8 @@ namespace EDCL.WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EDCL.API v1"));
             }
+
+            app.UseCors("AllowAll");
 
             app.UseRouting();
 
