@@ -5,6 +5,6 @@ namespace EDCL.WebAPI.Data.Repositories.Interfaces
 {
     public interface IDriverRepository
     {
-        Task<IEnumerable<DriverInfoDto>> FindDriverInfoByNoHP(string nohp);
+        Task<DriverInfoDto> FindDriverInfoByNoHP(string nohp);
     }
 }

@@ -6,6 +6,7 @@
         public string Name { get; set; }
         public string LPCD { get; set; }
         public string LPName { get; set; }
+        public string FilePath { get; set; }
 
     }
 
