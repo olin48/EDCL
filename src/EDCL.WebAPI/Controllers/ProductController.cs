@@ -25,8 +25,6 @@ namespace EDCL.WebAPI.Controllers
             {
                 var products = await _productService.GetProducts();
 
-                
-
                 _logger.LogInformation("Retrieved products successfully.");
                 return Ok(products);
             }
